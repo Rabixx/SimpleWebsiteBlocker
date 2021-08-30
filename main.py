@@ -1,6 +1,7 @@
 from notifypy import Notify
 from datetime import date
 import pyfiglet
+import requests
 import os.path
 import time
 import sys
@@ -9,6 +10,11 @@ import os
 user_choice = -1
 user_choice_block_website = ""
 user_choice_unlock_website = ""
+user_confirm_choice = ""
+
+current_version = "1.0"
+
+version_url = "https://raw.githubusercontent.com/Rabixx/updater/main/version.txt"
 
 win_path = "C:\\Windows\\System32\\drivers\\etc\\hosts"
 
@@ -29,8 +35,8 @@ if os.path.exists("start.tmp"):
 
     os.remove("start.tmp")
 
-def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path):
-    while user_choice != 6:
+def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice):
+    while user_choice != 7:
         if user_choice == 1:
             try:
                 os.system('cls')
@@ -103,6 +109,37 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                 os.system('cls')
         
         if user_choice == 5:
+            try:
+                os.system('cls')
+
+                url = requests.get(version_url)
+
+                version = url.text
+                
+                if float(version) > float(current_version):
+                    os.system('cls')
+                    
+                    print("New version {}is avaliable do you want to download it?".format(version))
+                    print()
+                    
+                    user_confirm_choice = str(input("(yes,no): "))
+
+                    if user_confirm_choice == "yes":
+                        os.system('start https://cutt.ly/wWoOWvb')
+                        os.system('cls')
+                    elif user_confirm_choice == "no":
+                        os.system('cls')
+                else:
+                    print("Great no updates were found!")
+                    time.sleep(2)
+                    os.system('cls')
+            except Exception as ex_5:
+                os.system('cls')
+                print(f"[ERROR] {ex_5}")
+                time.sleep(2)
+                os.system('cls')
+
+        if user_choice == 6:
             os.system('cls')
             print("Turning program off...")
             time.sleep(2)
@@ -114,8 +151,9 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
         print("2. Unlock website")
         print("3. Show all blocked websites")
         print("4. About app")
-        print("5. Exit")
+        print("5. Check for updates")
+        print("6. Exit")
         user_choice = int(input(">>: "))
 
 if __name__ == "__main__":
-    main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path)
+    main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice)

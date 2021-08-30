@@ -12,7 +12,9 @@ What you can do with that project:
 	     			 								     
 What you cant do with that project:				     
      
-1. Use app for commercial purposes selling etc
+1. Selling the software
 2. Copying the software
 3. Copying the logo of the project		     
 4. Sharing the software to the internet without the github tag
+
+REMEMBER IF YOU USE THAT APP YOU ACCEPT THAT LICENSE
