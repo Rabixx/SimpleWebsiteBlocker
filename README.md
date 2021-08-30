@@ -1,4 +1,3 @@
-# SimpleWebsiteBlocker
 # 🚫SimpleWebsiteBlocker🚫
 
 The SimpleWebsiteBlocker as it says is an console app written in Python to block any website u want isnt that cool right?
@@ -26,4 +25,4 @@ The SimpleWebsiteBlocker as it says is an console app written in Python to block
 >#
 >
 >`Screen shots`
->![screen_shot](https://user-images.githubusercontent.com/87124650/130261660-1542648a-a9af-4225-ae96-1c36315e88ee.png)
+>![screen_shot](https://user-images.githubusercontent.com/87124650/131369409-fbdeb44d-d331-4242-9623-b145758fb1dd.png)
