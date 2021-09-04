@@ -12,7 +12,7 @@ user_choice_block_website = ""
 user_choice_unlock_website = ""
 user_confirm_choice = ""
 
-current_version = "1.0"
+current_version = "1.1"
 
 version_url = "https://raw.githubusercontent.com/Rabixx/updater/main/version.txt"
 
@@ -42,6 +42,9 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                 os.system('cls')
                 c = open(win_path,"a")
                 print("what website u want to block?")
+                print()
+                print("to cancel hold CTRL + C in the same moment")
+                print()
                 user_choice_block_website = str(input(">>: "))
                 c.writelines("0.0.0.0" + " " + user_choice_block_website + "\n")
                 c.close()
@@ -53,11 +56,16 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                 print(f"[ERROR] {ex_1}")
                 time.sleep(2)
                 os.system('cls')
+            except KeyboardInterrupt:
+                os.system('cls')
 
         if user_choice == 2:
             try:
                 os.system('cls')
                 print("what website u want to unlock?")
+                print()
+                print("to cancel hold CTRL + C in the same moment")
+                print()
                 user_choice_unlock_website = str(input(">>: "))
                 with open(win_path, 'r') as file:
                     lines = file.readlines()
@@ -75,6 +83,8 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                 os.system('cls')
                 print(f"[ERROR] {ex_2}")
                 time.sleep(2)
+                os.system('cls')
+            except KeyboardInterrupt:
                 os.system('cls')
 
         if user_choice == 3:
@@ -96,10 +106,10 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
         if user_choice == 4:
             try:
                 os.system('cls')
-                print("SimpleWebsiteBlocker",date.today().year,"copyrights")
-                print("this app is really simple websiteblocker that can be used")
-                print("without any time limits its free and under SimpleWebsiteBlocker license")
-                print("you can find more details under this link {}".format("https://github.com/Rabixx/SimpleWebsiteBlocker/"))
+                print("> SimpleWebsiteBlocker",date.today().year,"copyrights")
+                print("> this app is really simple websiteblocker that can be used")
+                print("> without any time limits its free and under SimpleWebsiteBlocker license")
+                print("> you can find more details under this link {}".format("https://github.com/Rabixx/SimpleWebsiteBlocker/"))
                 os.system('pause')
                 os.system('cls')
             except Exception as ex_4:
