@@ -1,3 +1,5 @@
+--------------------- SimpleWebsiteBlocker LICENSE --------------------- 
+
 SimpleWebsiteBlocker all rights reversed (C)
 
 Project name: SimpleWebsiteBlocker
@@ -18,3 +20,5 @@ What you cant do with that project:
 4. Sharing the software to the internet without the github tag
 
 REMEMBER IF YOU USE THAT APP YOU ACCEPT THAT LICENSE
+
+------------------------------------------------------------------------

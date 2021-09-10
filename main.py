@@ -2,38 +2,48 @@ from notifypy import Notify
 from datetime import date
 import pyfiglet
 import requests
+import logging
 import os.path
 import time
 import sys
 import os
+
+logging.basicConfig(level=logging.INFO,format='%(asctime)s : %(levelname)s : %(message)s')
 
 user_choice = -1
 user_choice_block_website = ""
 user_choice_unlock_website = ""
 user_confirm_choice = ""
 
-current_version = "1.1"
+current_version = "1.2"
 
 version_url = "https://raw.githubusercontent.com/Rabixx/updater/main/version.txt"
 
 win_path = "C:\\Windows\\System32\\drivers\\etc\\hosts"
 
-if os.path.exists("start.tmp"):
+def on_start():
+    if os.path.exists("start.tmp"):
+        try:
+            notification = Notify()
+                        
+            notification.application_name = "SimpleWebsiteBlocker"
+            notification.title = "First time?"
+            notification.message = "we hope you will enjoy our app!"
+            notification.icon = "assets/icons/simple_website_blocker_icon.png"
 
-    notification = Notify()
-                
-    notification.application_name = "SimpleWebsiteBlocker"
-    notification.title = "First time?"
-    notification.message = "we hope you will enjoy our app!"
-    notification.icon = "assets/icons/simple_website_blocker_icon.png"
+            notification.send()
+                        
+            m = open(win_path,"w")
+            m.truncate(0)
+            m.close()
 
-    notification.send()
-                
-    m = open(win_path,"w")
-    m.truncate(0)
-    m.close()
-
-    os.remove("start.tmp")
+            os.remove("start.tmp")
+        except PermissionError:
+            logging.warning("Access denied please run SimpleWebsiteBlocker with admin permissions!")
+            os.system('pause')
+            sys.exit()
+    else:
+        pass
 
 def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice):
     while user_choice != 7:
@@ -148,6 +158,8 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                 print(f"[ERROR] {ex_5}")
                 time.sleep(2)
                 os.system('cls')
+            except KeyboardInterrupt:
+                os.system('cls')
 
         if user_choice == 6:
             os.system('cls')
@@ -166,4 +178,10 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
         user_choice = int(input(">>: "))
 
 if __name__ == "__main__":
-    main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice)
+    if sys.platform.startswith("win"):
+        on_start()
+        main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice)
+    else:
+        logging.warning("SimpleWebsiteBlocker works only on Windows operating system!")
+        os.system('pause')
+        sys.exit()
