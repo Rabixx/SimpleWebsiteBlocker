@@ -11,6 +11,13 @@ The SimpleWebsiteBlocker as it says is an console app written in Python to block
 >if u found any issues in the source code please report it to the issues section its really helpful and help to improve the app - [issues](http://github.com/Rabixx/SimpleWebsiteBlocker/issues)
 >
 >
+>**💻 On what systems this app works:**
+>
+>- ```Windows 7```
+>- ```Windows 8```
+>- ```Windows 8.1```
+>- ```Windows 10```
+>
 >
 >#
 >`FAQ`
