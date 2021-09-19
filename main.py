@@ -1,21 +1,34 @@
 from notifypy import Notify
-from datetime import date
+from datetime import datetime
+from colorama import Fore
 import pyfiglet
+import colorama
 import requests
 import logging
 import os.path
+import dotenv
 import time
 import sys
 import os
 
+colorama.init()
+
 logging.basicConfig(level=logging.INFO,format='%(asctime)s : %(levelname)s : %(message)s')
+
+config_path = "assets/config.env"
+dotenv.load_dotenv(config_path)
+
+COLOR = os.environ.get("COLOR")
 
 user_choice = -1
 user_choice_block_website = ""
 user_choice_unlock_website = ""
 user_confirm_choice = ""
+user_choice_settings = -1
+user_choice_settings_confirm_color = -1
+user_choice_settings_confirm_clear = -1
 
-current_version = "1.2"
+current_version = "1.3"
 
 version_url = "https://raw.githubusercontent.com/Rabixx/updater/main/version.txt"
 
@@ -25,39 +38,46 @@ def on_start():
     if os.path.exists("start.tmp"):
         try:
             notification = Notify()
-                        
+
             notification.application_name = "SimpleWebsiteBlocker"
             notification.title = "First time?"
-            notification.message = "we hope you will enjoy our app!"
+            notification.message = "Hello {} we hope you will enjoy our app!".format(os.getlogin())
             notification.icon = "assets/icons/simple_website_blocker_icon.png"
 
             notification.send()
-                        
-            m = open(win_path,"w")
-            m.truncate(0)
-            m.close()
+
+            with open(win_path,"w") as m:
+                m.truncate(0)
 
             os.remove("start.tmp")
+
+            CONFIG_COLOR = getattr(Fore, COLOR)
+            print(CONFIG_COLOR)
+            os.system('cls')
         except PermissionError:
             logging.warning("Access denied please run SimpleWebsiteBlocker with admin permissions!")
             os.system('pause')
             sys.exit()
-    else:
-        pass
 
-def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice):
+def load_config():
+    CONFIG_COLOR = getattr(Fore, COLOR)
+    print(CONFIG_COLOR)
+    os.system('cls')
+
+def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice,user_choice_settings,user_choice_settings_confirm_clear,user_choice_settings_confirm_color,config_path,COLOR):
     while user_choice != 7:
         if user_choice == 1:
             try:
                 os.system('cls')
-                c = open(win_path,"a")
                 print("what website u want to block?")
                 print()
                 print("to cancel hold CTRL + C in the same moment")
                 print()
                 user_choice_block_website = str(input(">>: "))
-                c.writelines("0.0.0.0" + " " + user_choice_block_website + "\n")
-                c.close()
+                
+                with open(win_path,"a") as c:
+                    c.writelines("0.0.0.0" + " " + user_choice_block_website + "\n")
+                
                 print("website was successfully blocked!")
                 time.sleep(1)
                 os.system('cls')
@@ -96,39 +116,25 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                 os.system('cls')
             except KeyboardInterrupt:
                 os.system('cls')
-
+        
         if user_choice == 3:
             try:
                 os.system('cls')
                 print("all the websites that are currently blocked:")
                 print()
-                a = open(win_path,"r")
-                lines = a.readlines()
+                with open(win_path,"r") as a:
+                    lines = a.readlines()
+                
                 for line in lines:
                     print(line)
-                a.close()
+
             except Exception as ex_3:
                 os.system('cls')
                 print(f"[ERROR] {ex_3}")
                 time.sleep(2)
                 os.system('cls')
-
-        if user_choice == 4:
-            try:
-                os.system('cls')
-                print("> SimpleWebsiteBlocker",date.today().year,"copyrights")
-                print("> this app is really simple websiteblocker that can be used")
-                print("> without any time limits its free and under SimpleWebsiteBlocker license")
-                print("> you can find more details under this link {}".format("https://github.com/Rabixx/SimpleWebsiteBlocker/"))
-                os.system('pause')
-                os.system('cls')
-            except Exception as ex_4:
-                os.system('cls')
-                print(f"[ERROR] {ex_4}")
-                time.sleep(2)
-                os.system('cls')
         
-        if user_choice == 5:
+        if user_choice == 4:
             try:
                 os.system('cls')
 
@@ -153,6 +159,164 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                     print("Great no updates were found!")
                     time.sleep(2)
                     os.system('cls')
+            except Exception as ex_4:
+                os.system('cls')
+                print(f"[ERROR] {ex_4}")
+                time.sleep(2)
+                os.system('cls')
+            except KeyboardInterrupt:
+                os.system('cls')
+
+        if user_choice == 5:
+            try:
+                os.system('cls')
+            
+                print("1. Change app color")
+                print("2. Reset all blocked websites")
+                print("3. About app")
+                print()
+                print("to cancel hold CTRL + C in the same moment")
+                print()
+                user_choice_settings = int(input(">>: "))
+
+                if user_choice_settings == 1:
+                    os.system('cls')
+                    
+                    print(f"Current color: {COLOR}")
+                    print()
+                    print("1. Red")
+                    print("2. Green")
+                    print("3. Yellow")
+                    print("4. Blue")
+                    print("5. Magenta")
+                    print("6. Cyan")
+                    print("7. Reset color")
+                    print()
+                    print("to cancel hold CTRL + C in the same moment")
+                    print()
+                    user_choice_settings_confirm_color = int(input(">>: "))
+
+                    if user_choice_settings_confirm_color == 1:
+                        os.system('cls')
+                                    
+                        os.environ["COLOR"] = "RED"
+
+                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+
+                        print("Changed color to red!")
+                        print()
+                        print("To see changes you have to restart the app")
+                        time.sleep(3)
+                        os.system('cls')
+
+                    elif user_choice_settings_confirm_color == 2:
+                        os.system('cls')
+                                        
+                        os.environ["COLOR"] = "GREEN"
+
+                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+
+                        print("Changed color to green!")
+                        print()
+                        print("To see changes you have to restart the app")
+                        time.sleep(3)
+                        os.system('cls')
+                    
+                    elif user_choice_settings_confirm_color == 3:
+                            os.system('cls')
+                                        
+                            os.environ["COLOR"] = "YELLOW"
+
+                            dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+
+                            print("Changed color to yellow!")
+                            print()
+                            print("To see changes you have to restart the app")
+                            time.sleep(3)
+                            os.system('cls')
+
+                    elif user_choice_settings_confirm_color == 4:
+                        os.system('cls')
+                                        
+                        os.environ["COLOR"] = "BLUE"
+
+                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+
+                        print("Changed color to blue!")
+                        print()
+                        print("To see changes you have to restart the app")
+                        time.sleep(3)
+                        os.system('cls')
+                    
+                    elif user_choice_settings_confirm_color == 5:
+                        os.system('cls')
+                                        
+                        os.environ["COLOR"] = "MAGENTA"
+
+                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+
+                        print("Changed color to magenta!")
+                        print()
+                        print("To see changes you have to restart the app")
+                        time.sleep(3)
+                        os.system('cls')
+
+                    elif user_choice_settings_confirm_color == 6:
+                        os.system('cls')
+                                        
+                        os.environ["COLOR"] = "CYAN"
+
+                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+
+                        print("Changed color to cyan!")
+                        print()
+                        print("To see changes you have to restart the app")
+                        time.sleep(3)
+                        os.system('cls')
+
+                    elif user_choice_settings_confirm_color == 7:   
+                        os.system('cls')
+                                        
+                        os.environ["COLOR"] = "WHITE"
+
+                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+
+                        print("Changed color to deafult!")
+                        print()
+                        print("To see changes you have to restart the app")
+                        time.sleep(3)
+                        os.system('cls')
+                        
+                if user_choice_settings == 2:
+                    os.system('cls')
+                    print("Are you sure to reset all blocked websites?")
+                    print()
+                    print("to cancel hold CTRL + C in the same moment")
+                    print()
+                    user_choice_settings_confirm_clear = str(input("(yes,no): "))
+
+                    if user_choice_settings_confirm_clear == "yes":
+                        with open(win_path,"w") as clear_file:
+                            clear_file.truncate(0)
+
+                        print("All websites were unlocked!")
+                        time.sleep(1)
+                        os.system('cls')
+                    else:
+                        os.system('cls')
+
+                if user_choice_settings == 3:
+                    os.system('cls')
+                    print(f"> SimpleWebsiteBlocker {datetime.today().year} copyrights (C)")
+                    print()
+                    print("> the SimpleWebsiteBlocker as it says is simple app to block")
+                    print("> unwanted or annoying websites also SimpleWebsiteBlocker")
+                    print("> is free and under SimpleWebsiteBlocker(SBW) license you can use")
+                    print("> it without any time limits for more details visit {}".format("https://github.com/Rabixx/SimpleWebsiteBlocker"))
+                    print()
+                    os.system('pause')
+                    os.system('cls')
+
             except Exception as ex_5:
                 os.system('cls')
                 print(f"[ERROR] {ex_5}")
@@ -172,15 +336,16 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
         print("1. Block website")
         print("2. Unlock website")
         print("3. Show all blocked websites")
-        print("4. About app")
-        print("5. Check for updates")
+        print("4. Check for updates")
+        print("5. Settings")
         print("6. Exit")
         user_choice = int(input(">>: "))
 
 if __name__ == "__main__":
     if sys.platform.startswith("win"):
         on_start()
-        main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice)
+        load_config()
+        main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice,user_choice_settings,user_choice_settings_confirm_clear,user_choice_settings_confirm_color,config_path,COLOR)
     else:
         logging.warning("SimpleWebsiteBlocker works only on Windows operating system!")
         os.system('pause')
