@@ -1,5 +1,5 @@
-from notifypy import Notify
 from datetime import datetime
+from notifypy import Notify
 from colorama import Fore
 import pyfiglet
 import colorama
@@ -27,8 +27,9 @@ user_confirm_choice = ""
 user_choice_settings = -1
 user_choice_settings_confirm_color = -1
 user_choice_settings_confirm_clear = -1
+user_choice_settings_choice_list = ""
 
-current_version = "1.3"
+current_version = "1.4"
 
 version_url = "https://raw.githubusercontent.com/Rabixx/updater/main/version.txt"
 
@@ -64,7 +65,7 @@ def load_config():
     print(CONFIG_COLOR)
     os.system('cls')
 
-def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice,user_choice_settings,user_choice_settings_confirm_clear,user_choice_settings_confirm_color,config_path,COLOR):
+def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice,user_choice_settings,user_choice_settings_confirm_clear,user_choice_settings_confirm_color,config_path,COLOR,user_choice_settings_choice_list):
     while user_choice != 7:
         if user_choice == 1:
             try:
@@ -174,6 +175,7 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                 print("1. Change app color")
                 print("2. Reset all blocked websites")
                 print("3. About app")
+                print("4. Inject list to block")
                 print()
                 print("to cancel hold CTRL + C in the same moment")
                 print()
@@ -317,6 +319,34 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                     os.system('pause')
                     os.system('cls')
 
+                if user_choice_settings == 4:
+                    os.system('cls')
+                    
+                    files = os.listdir("assets\\lists\\")
+                    
+                    print("Which list you want to inject?")
+                    print()
+                    for file in files:
+                        if file.endswith(".txt"):
+                            print(">>",file)
+                    print()
+                    print("To cancel hold Ctrl + C in the same moment")
+                    print()
+                    user_choice_settings_choice_list = str(input(">>: "))
+
+                    os.system('cls')
+
+                    with open(f"assets\\lists\\{user_choice_settings_choice_list}","r+") as list_to_block:
+                        with open(win_path,"w") as win_block:
+                            for item in list_to_block:
+                                win_block.writelines("0.0.0.0 " + item.strip() + "\n")
+
+                    print(f"List {file} successfully injected!")
+                    
+                    time.sleep(2)
+
+                    os.system('cls')
+
             except Exception as ex_5:
                 os.system('cls')
                 print(f"[ERROR] {ex_5}")
@@ -345,7 +375,7 @@ if __name__ == "__main__":
     if sys.platform.startswith("win"):
         on_start()
         load_config()
-        main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice,user_choice_settings,user_choice_settings_confirm_clear,user_choice_settings_confirm_color,config_path,COLOR)
+        main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice,user_choice_settings,user_choice_settings_confirm_clear,user_choice_settings_confirm_color,config_path,COLOR,user_choice_settings_choice_list)
     else:
         logging.warning("SimpleWebsiteBlocker works only on Windows operating system!")
         os.system('pause')
