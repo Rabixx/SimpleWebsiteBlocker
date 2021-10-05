@@ -3,3 +3,4 @@
 [10.09.2021 - version 1.2] Small changes in source code now it looks cleaner and some bugs were fixed also checking the operating system before running the app was added!
 [19.09.2021 - version 1.3] Huuuge update today! we improved the source code to be faster also we added customizing color of the app in settings section check it out!
 [26.09.2021 - version 1.4] Added inject option to block websites faster!
+[05.10.2021 - version 1.5] Added auto update now app download all files from github and extract them to app folder also config extension was changed to ini

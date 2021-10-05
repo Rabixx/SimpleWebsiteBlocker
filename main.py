@@ -1,3 +1,4 @@
+from configparser import ConfigParser
 from datetime import datetime
 from notifypy import Notify
 from colorama import Fore
@@ -6,7 +7,6 @@ import colorama
 import requests
 import logging
 import os.path
-import dotenv
 import time
 import sys
 import os
@@ -15,10 +15,12 @@ colorama.init()
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s : %(levelname)s : %(message)s')
 
-config_path = "assets/config.env"
-dotenv.load_dotenv(config_path)
+config_path = "assets/config.ini"
 
-COLOR = os.environ.get("COLOR")
+cfg = ConfigParser()
+cfg.read(config_path)
+
+COLOR = cfg["settings"]["color"]
 
 user_choice = -1
 user_choice_block_website = ""
@@ -29,7 +31,7 @@ user_choice_settings_confirm_color = -1
 user_choice_settings_confirm_clear = -1
 user_choice_settings_choice_list = ""
 
-current_version = "1.4"
+current_version = "1.5"
 
 version_url = "https://raw.githubusercontent.com/Rabixx/updater/main/version.txt"
 
@@ -152,8 +154,8 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                     user_confirm_choice = str(input("(yes,no): "))
 
                     if user_confirm_choice == "yes":
-                        os.system('start https://cutt.ly/wWoOWvb')
-                        os.system('cls')
+                        os.system('start ../update/updater.exe')
+                        sys.exit()
                     elif user_confirm_choice == "no":
                         os.system('cls')
                 else:
@@ -201,9 +203,10 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                     if user_choice_settings_confirm_color == 1:
                         os.system('cls')
                                     
-                        os.environ["COLOR"] = "RED"
+                        cfg.set('settings','color','RED')
 
-                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+                        with open(config_path,"w") as clr_1:
+                            cfg.write(clr_1)
 
                         print("Changed color to red!")
                         print()
@@ -214,9 +217,10 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                     elif user_choice_settings_confirm_color == 2:
                         os.system('cls')
                                         
-                        os.environ["COLOR"] = "GREEN"
+                        cfg.set('settings','color','GREEN')
 
-                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+                        with open(config_path,"w") as clr_2:
+                            cfg.write(clr_2)
 
                         print("Changed color to green!")
                         print()
@@ -227,9 +231,10 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                     elif user_choice_settings_confirm_color == 3:
                             os.system('cls')
                                         
-                            os.environ["COLOR"] = "YELLOW"
+                            cfg.set('settings','color','YELLOW')
 
-                            dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+                            with open(config_path,"w") as clr_3:
+                                cfg.write(clr_3)
 
                             print("Changed color to yellow!")
                             print()
@@ -240,9 +245,10 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                     elif user_choice_settings_confirm_color == 4:
                         os.system('cls')
                                         
-                        os.environ["COLOR"] = "BLUE"
+                        cfg.set('settings','color','BLUE')
 
-                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+                        with open(config_path,"w") as clr_4:
+                            cfg.write(clr_4)
 
                         print("Changed color to blue!")
                         print()
@@ -253,9 +259,10 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                     elif user_choice_settings_confirm_color == 5:
                         os.system('cls')
                                         
-                        os.environ["COLOR"] = "MAGENTA"
+                        cfg.set('settings','color','MAGENTA')
 
-                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+                        with open(config_path,"w") as clr_5:
+                            cfg.write(clr_5)
 
                         print("Changed color to magenta!")
                         print()
@@ -266,9 +273,10 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                     elif user_choice_settings_confirm_color == 6:
                         os.system('cls')
                                         
-                        os.environ["COLOR"] = "CYAN"
+                        cfg.set('settings','color','CYAN')
 
-                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+                        with open(config_path,"w") as clr_6:
+                            cfg.write(clr_6)
 
                         print("Changed color to cyan!")
                         print()
@@ -279,9 +287,10 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                     elif user_choice_settings_confirm_color == 7:   
                         os.system('cls')
                                         
-                        os.environ["COLOR"] = "WHITE"
+                        cfg.set('settings','color','WHITE')
 
-                        dotenv.set_key(config_path,"COLOR",os.environ["COLOR"])
+                        with open(config_path,"w") as clr_7:
+                            cfg.write(clr_7)
 
                         print("Changed color to deafult!")
                         print()
@@ -373,9 +382,15 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
 
 if __name__ == "__main__":
     if sys.platform.startswith("win"):
-        on_start()
-        load_config()
-        main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice,user_choice_settings,user_choice_settings_confirm_clear,user_choice_settings_confirm_color,config_path,COLOR,user_choice_settings_choice_list)
+        try:
+            on_start()
+            load_config()
+            main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice,user_choice_settings,user_choice_settings_confirm_clear,user_choice_settings_confirm_color,config_path,COLOR,user_choice_settings_choice_list)
+        except Exception as ex_6:
+            os.system('cls')
+            print(f"[ERROR] {ex_6}")
+            time.sleep(2)
+            os.system('cls')
     else:
         logging.warning("SimpleWebsiteBlocker works only on Windows operating system!")
         os.system('pause')
