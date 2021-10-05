@@ -4,6 +4,8 @@ The SimpleWebsiteBlocker as it says is an console app written in Python to block
 
 >As the license says the SimpleWebsiteBlocker is free without any time limits
 >
+>**WARNING! GITHUB VERSION IS ONLY TO VIEW SOURCE CODE ETC**
+>
 >To download the app visit https://sites.google.com/view/simplewebsiteblocker/
 >
 >
