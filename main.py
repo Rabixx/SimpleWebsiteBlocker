@@ -7,6 +7,7 @@ import colorama
 import requests
 import logging
 import os.path
+import ctypes
 import time
 import sys
 import os
@@ -22,19 +23,6 @@ cfg.read(config_path)
 
 COLOR = cfg["settings"]["color"]
 
-user_choice = -1
-user_choice_block_website = ""
-user_choice_unlock_website = ""
-user_confirm_choice = ""
-user_choice_settings = -1
-user_choice_settings_confirm_color = -1
-user_choice_settings_confirm_clear = -1
-user_choice_settings_choice_list = ""
-
-current_version = "1.5"
-
-version_url = "https://raw.githubusercontent.com/Rabixx/updater/main/version.txt"
-
 win_path = "C:\\Windows\\System32\\drivers\\etc\\hosts"
 
 def on_start():
@@ -49,25 +37,41 @@ def on_start():
 
             notification.send()
 
-            with open(win_path,"w") as m:
-                m.truncate(0)
+            with open(win_path,"w") as first_clear:
+                first_clear.truncate(0)
 
             os.remove("start.tmp")
 
             CONFIG_COLOR = getattr(Fore, COLOR)
             print(CONFIG_COLOR)
             os.system('cls')
-        except PermissionError:
-            logging.warning("Access denied please run SimpleWebsiteBlocker with admin permissions!")
-            os.system('pause')
-            sys.exit()
+        except:
+            pass
+
+def checkadmin():
+    try:
+        isAdmin = (os.getuid() == 0)
+    except AttributeError:
+        isAdmin = ctypes.windll.shell32.IsUserAnAdmin() != 0
+    return isAdmin
 
 def load_config():
     CONFIG_COLOR = getattr(Fore, COLOR)
     print(CONFIG_COLOR)
     os.system('cls')
 
-def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice,user_choice_settings,user_choice_settings_confirm_clear,user_choice_settings_confirm_color,config_path,COLOR,user_choice_settings_choice_list):
+def main(win_path):
+    user_choice = -1
+    user_choice_block_website = ""
+    user_choice_unlock_website = ""
+    user_confirm_choice = ""
+    user_choice_settings = -1
+    user_choice_settings_confirm_color = -1
+    user_choice_settings_confirm_clear = -1
+    user_choice_settings_choice_list = ""
+    current_version = "1.6"
+    version_url = "https://raw.githubusercontent.com/Rabixx/updater/main/version.txt"
+
     while user_choice != 7:
         if user_choice == 1:
             try:
@@ -78,8 +82,8 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                 print()
                 user_choice_block_website = str(input(">>: "))
                 
-                with open(win_path,"a") as c:
-                    c.writelines("0.0.0.0" + " " + user_choice_block_website + "\n")
+                with open(win_path,"a") as ch_1:
+                    ch_1.writelines("0.0.0.0" + " " + user_choice_block_website + "\n")
                 
                 print("website was successfully blocked!")
                 time.sleep(1)
@@ -100,11 +104,11 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                 print("to cancel hold CTRL + C in the same moment")
                 print()
                 user_choice_unlock_website = str(input(">>: "))
-                with open(win_path, 'r') as file:
+                with open(win_path,"r") as file:
                     lines = file.readlines()
 
                 content = f'0.0.0.0 {user_choice_unlock_website}'
-                with open(win_path, 'w') as file:
+                with open(win_path, "w") as file:
                     for line in lines:
                         if line.strip("\n") != content:
                             file.write(line)
@@ -125,8 +129,8 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
                 os.system('cls')
                 print("all the websites that are currently blocked:")
                 print()
-                with open(win_path,"r") as a:
-                    lines = a.readlines()
+                with open(win_path,"r") as ch_3:
+                    lines = ch_3.readlines()
                 
                 for line in lines:
                     print(line)
@@ -382,15 +386,20 @@ def main(user_choice,user_choice_block_website,user_choice_unlock_website,win_pa
 
 if __name__ == "__main__":
     if sys.platform.startswith("win"):
-        try:
-            on_start()
-            load_config()
-            main(user_choice,user_choice_block_website,user_choice_unlock_website,win_path,version_url,current_version,user_confirm_choice,user_choice_settings,user_choice_settings_confirm_clear,user_choice_settings_confirm_color,config_path,COLOR,user_choice_settings_choice_list)
-        except Exception as ex_6:
-            os.system('cls')
-            print(f"[ERROR] {ex_6}")
-            time.sleep(2)
-            os.system('cls')
+        if checkadmin():
+            try:
+                on_start()
+                load_config()
+                main(win_path)
+            except Exception as ex_6:
+                os.system('cls')
+                print(f"[ERROR] {ex_6}")
+                time.sleep(2)
+                os.system('cls')
+        else:
+            logging.warning("Please run SimpleWebsiteBlocker with admin permissions!")
+            os.system('pause')
+            sys.exit()
     else:
         logging.warning("SimpleWebsiteBlocker works only on Windows operating system!")
         os.system('pause')
