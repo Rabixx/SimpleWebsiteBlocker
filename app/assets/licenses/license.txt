@@ -1,0 +1,24 @@
+--------------------- SimpleWebsiteBlocker LICENSE --------------------- 
+
+SimpleWebsiteBlocker all rights reversed (C)
+
+Project name: SimpleWebsiteBlocker
+
+Project creator: https://github.com/Rabixx
+
+What you can do with that project:                                                              
+
+1. Use the app without any time limits
+2. Use the app for commercial purposes if you credit my github
+3. Modify the source code to improve the app
+
+What you cant do with that project:	     
+
+1. Selling the software
+2. Copying the software
+3. Copying the logo of the project
+4. Sharing the software to the internet without the github tag
+
+REMEMBER IF YOU USE THAT APP YOU ACCEPT THAT LICENSE
+
+------------------------------------------------------------------------
