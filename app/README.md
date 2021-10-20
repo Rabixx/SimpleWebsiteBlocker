@@ -30,7 +30,6 @@ The SimpleWebsiteBlocker as it says is an console app written in Python to block
 >Will you improve that app in future? **If that project will grow up then yeah I will improve it becouse why not**
 >
 >How do I run the app? **If u installed app properly click right mouse button on the app and run as administrator thats all!**
->#
 >
 >`Screen shots`
->![screen_shot](https://user-images.githubusercontent.com/87124650/131369409-fbdeb44d-d331-4242-9623-b145758fb1dd.png)
+>![screen_shot](https://user-images.githubusercontent.com/87124650/138147274-c6c3528d-c05d-4dbe-bbc2-8912088c78bc.jpg)
