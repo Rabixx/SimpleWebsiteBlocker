@@ -32,4 +32,4 @@ The SimpleWebsiteBlocker as it says is an console app written in Python to block
 >#
 >
 >`Screen shots`
->![screen_shot](https://user-images.githubusercontent.com/87124650/131369409-fbdeb44d-d331-4242-9623-b145758fb1dd.png)
+>![screen-shot](https://user-images.githubusercontent.com/87124650/138292497-ddc98e08-e055-43b5-aa4d-c4d82010dbcd.jpg)
