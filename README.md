@@ -22,13 +22,13 @@ The SimpleWebsiteBlocker as it says is an console app written in Python to block
 >#
 >`FAQ`
 >>
->How long does it take to create that app? **it took me like a one day to create that app**
+>How long does it took you to create that app? **it took me like a one day to create that app**
 >
 >Do I need administrator permissions to run the app? **Yes u need an admin permissions to run and use the app**
 >
->Will you improve that app in future? **If that project will grow up then yeah I will improve it becouse why not**
+>Will you improve that app in future? **If that project will grow up then yeah I will improve it because why not**
 >
->How do I run the app? **If u installed app properly click right mouse button on the app and run as administrator thats all!**
+>How do I run the app? **If you installed app properly click right mouse button on the app and run as administrator thats all!**
 >#
 >
 >`Screen shots`
