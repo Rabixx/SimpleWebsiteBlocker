@@ -1,3 +1,26 @@
+# THIS PROJECT IS NOT SUPPORTED ANYMORE!
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # 🚫SimpleWebsiteBlocker🚫
 
 The SimpleWebsiteBlocker as it says is an console app written in Python to block any website u want isnt that cool right?
